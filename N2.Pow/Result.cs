@@ -4,9 +4,11 @@ public class Result
 {
     public WorkResult? WorkResult { get; }
     public ErrorResult? ErrorResult { get; }
+    public string? OriginalResponse { get; }
 
-    internal Result(WorkResult? result)
+    internal Result(WorkResult? result, string? originalResponse)
     {
+        OriginalResponse = originalResponse;
         if (result?.Work != null)
         {
             WorkResult = result;
@@ -17,8 +19,9 @@ public class Result
         }
     }
 
-    internal Result(ErrorResult? result)
+    internal Result(ErrorResult? result, string? originalResponse)
     {
+        OriginalResponse = originalResponse;
         if (result?.Error > 0)
         {
             ErrorResult = result;

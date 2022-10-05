@@ -41,18 +41,26 @@ public class WorkServer
 
     private async Task<Result> Deserialize(Task<HttpResponseMessage> result)
     {
+        string? json = null;
         try
         {
             HttpResponseMessage message = await result;
-            var json = await message.Content.ReadAsStringAsync();
+            json = await message.Content.ReadAsStringAsync();
+            
             var work = JsonSerializer.Deserialize<WorkResult>(json, SerializerOptions);
-            return work?.Work != null
-                ? new Result(work)
-                : new Result(JsonSerializer.Deserialize<ErrorResult>(json, SerializerOptions));
+            if (work?.Work != null)
+            {
+                return new Result(work, json);
+            }
+            else
+            {
+                var error = JsonSerializer.Deserialize<ErrorResult>(json, SerializerOptions);
+                return new Result(error, json);
+            }
         }
         catch (Exception ex)
         {
-            return new Result(new ErrorResult { Error = 500, Message = ex.Message });
+            return new Result(new ErrorResult { Error = 500, Message = ex.Message }, json);
         }
     }
 }
