@@ -7,7 +7,7 @@ public class Result
 
     internal Result(WorkResult? result)
     {
-        if (result != null)
+        if (result?.Work != null)
         {
             WorkResult = result;
         }
@@ -19,6 +19,13 @@ public class Result
 
     internal Result(ErrorResult? result)
     {
-        ErrorResult = result ?? ErrorResult.UnknownError;
+        if (result?.Error > 0)
+        {
+            ErrorResult = result;
+        }
+        else
+        {
+            ErrorResult = ErrorResult.UnknownError;
+        }
     }
 }

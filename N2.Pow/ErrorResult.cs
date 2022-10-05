@@ -6,7 +6,7 @@ public class ErrorResult
 {
     public int Error { get; set; }
     public string Message { get; set; }
-    public string Docs { get; }
+    public string Docs { get; set; }
 
     internal static readonly ErrorResult UnknownError = new ErrorResult
     {

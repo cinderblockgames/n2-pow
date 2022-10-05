@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace N2.Pow;
 
@@ -26,21 +27,32 @@ public class WorkServer
     private async Task<Result> GenerateWorkGet(string hash)
     {
         var path = Options.ApiKey != null ? $"{hash}?key={Options.ApiKey}" : hash;
-        var result = await Client.GetAsync(path);
-        return await Deserialize(result);
+        return await Deserialize(Client.GetAsync(path));
     }
 
     private async Task<Result> GenerateWorkPost(string hash)
     {
         var request = new WorkRequest(hash, Options.ApiKey);
-        var result = await Client.PostAsJsonAsync(null as string, request);
-        return await Deserialize(result);
+        return await Deserialize(Client.PostAsJsonAsync(null as string, request));
     }
 
-    private async Task<Result> Deserialize(HttpResponseMessage result)
+    private static readonly JsonSerializerOptions SerializerOptions =
+        new JsonSerializerOptions(JsonSerializerDefaults.Web);
+
+    private async Task<Result> Deserialize(Task<HttpResponseMessage> result)
     {
-        return result.IsSuccessStatusCode
-            ? new Result(await result.Content.ReadFromJsonAsync<WorkResult>())
-            : new Result(await result.Content.ReadFromJsonAsync<ErrorResult>());
+        try
+        {
+            HttpResponseMessage message = await result;
+            var json = await message.Content.ReadAsStringAsync();
+            var work = JsonSerializer.Deserialize<WorkResult>(json, SerializerOptions);
+            return work?.Work != null
+                ? new Result(work)
+                : new Result(JsonSerializer.Deserialize<ErrorResult>(json, SerializerOptions));
+        }
+        catch (Exception ex)
+        {
+            return new Result(new ErrorResult { Error = 500, Message = ex.Message });
+        }
     }
 }
