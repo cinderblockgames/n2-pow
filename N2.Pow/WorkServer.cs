@@ -8,13 +8,13 @@ public class WorkServer
     private HttpClient Client { get; }
     private WorkServerOptions Options { get; }
 
-    public WorkServer(WorkServerOptions options, HttpMessageHandler? handler = null)
+    public WorkServer(WorkServerOptions? options = null, HttpMessageHandler? handler = null)
     {
-        Client = handler != null ? new HttpClient(handler) : new HttpClient();
-        Client.BaseAddress = new Uri(options.Url);
-        Client.Timeout = options.Timeout;
+        Options = options ?? new();
 
-        Options = options;
+        Client = handler != null ? new HttpClient(handler) : new HttpClient();
+        Client.BaseAddress = new Uri(Options.Url);
+        Client.Timeout = Options.Timeout;
     }
 
     public async Task<Result> GenerateWork(string hash)
