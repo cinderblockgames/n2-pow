@@ -1,21 +1,16 @@
 ﻿namespace N2.Pow;
 
+#nullable disable
+
 public class ErrorResult
 {
-    public int Error { get; }
-    public string Message { get; }
-    public string? Docs { get; }
+    public int Error { get; private set; }
+    public string Message { get; private set; }
+    public string Docs { get; }
 
-    internal ErrorResult(int error, string message, string? docs)
+    internal static readonly ErrorResult UnknownError = new ErrorResult
     {
-        Error = error;
-        Message = message;
-        Docs = docs;
-    }
-
-    internal static readonly ErrorResult UnknownError = new ErrorResult(
-        500,
-        "Unable to read response from server.",
-        null
-    );
+        Error = 500,
+        Message = "Unable to read response from server."
+    };
 }
