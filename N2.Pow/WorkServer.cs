@@ -4,17 +4,16 @@ namespace N2.Pow;
 
 public class WorkServer
 {
-    private WorkServerOptions Options { get; }
     private HttpClient Client { get; }
+    private WorkServerOptions Options { get; }
 
-    public WorkServer(WorkServerOptions options)
+    public WorkServer(WorkServerOptions options, HttpMessageHandler? handler = null)
     {
+        Client = handler != null ? new HttpClient(handler) : new HttpClient();
+        Client.BaseAddress = new Uri(options.Url);
+        Client.Timeout = options.Timeout;
+
         Options = options;
-        Client = new HttpClient
-        {
-            BaseAddress = new Uri(options.Url),
-            Timeout = options.Timeout
-        };
     }
 
     public async Task<Result> GenerateWork(string hash)
