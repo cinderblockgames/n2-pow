@@ -4,12 +4,12 @@
 
 public class WorkResult
 {
-    public string Difficulty { get; }
-    public string Multiplier { get; }
-    public string Work { get; }
-    public string Frontier { get; }
-    public int Remaining { get; }
-    public bool Cached { get; }
-    public string Duration { get; }
-    public string Server { get; }
+    public string Difficulty { get; set; }
+    public string Multiplier { get; set; }
+    public string Work { get; set; }
+    public string Frontier { get; set; }
+    public int Remaining { get; set; }
+    public bool Cached { get; set; }
+    public string Duration { get; set; }
+    public string Server { get; set; }
 }

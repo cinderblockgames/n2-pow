@@ -4,8 +4,8 @@
 
 public class ErrorResult
 {
-    public int Error { get; private set; }
-    public string Message { get; private set; }
+    public int Error { get; set; }
+    public string Message { get; set; }
     public string Docs { get; }
 
     internal static readonly ErrorResult UnknownError = new ErrorResult

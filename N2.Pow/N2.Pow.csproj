@@ -11,6 +11,7 @@
         <PackageLicenseUrl>https://github.com/cinderblockgames/n2-pow/blob/main/LICENSE</PackageLicenseUrl>
         <RepositoryUrl>https://github.com/cinderblockgames/n2-pow</RepositoryUrl>
         <Company>cinderblockgames</Company>
+        <PackageVersion>0.1.0</PackageVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
