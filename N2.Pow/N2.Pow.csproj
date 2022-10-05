@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Title>N2.Pow</Title>
+        <Authors>cinderblockgames</Authors>
+        <Description>.NET library for ease of accessing Nano.to GPU PoW API (pow.nano.to).</Description>
+        <PackageProjectUrl>https://github.com/cinderblockgames/n2-pow</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/cinderblockgames/n2-pow/blob/main/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/cinderblockgames/n2-pow</RepositoryUrl>
+        <Company>cinderblockgames</Company>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <OutputPath>bin/Debug/net6.0/</OutputPath>
+    </PropertyGroup>
+
+</Project>
