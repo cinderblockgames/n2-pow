@@ -5,7 +5,7 @@
 ```csharp
 var server = new WorkServer();
 var response  = await server.GenerateWork("ha..5h");
-var work = response.Work;
+var work = response.WorkResult?.Work;
 ```
 
 ## Options
@@ -19,5 +19,11 @@ var options = new WorkServerOptions
 };
 var server = new WorkServer(options);
 var response  = await server.GenerateWork("ha..5h");
-var work = response.Work;
+var work = response.WorkResult?.Work;
+```
+
+## Errors
+```csharp
+var response  = await server.GenerateWork("ha..5h");
+var error = response.ErrorResult?.Message;
 ```
